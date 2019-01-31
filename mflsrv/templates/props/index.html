@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Active Properties (Log in to get access key) {% endblock %}</h1>
+<nav>
+  <ul>
+    {% if g.user %}
+      <li><span>{{ g.user['username'] }}</span>
+      {% if g.user['username'] == "admin" %}
+        <li><a href="{{ url_for('auth.register') }}">Register</a>
+      {% endif %}
+      <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+    {% else %}
+      <li><a href="{{ url_for('auth.login') }}">Log In</a>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+{% if g.user %}
+<div style="float: right;">
+<nav>
+  <ul>
+    <li><a class="action" href="{{ url_for('props.create') }}">Add New Property</a>
+  </ul>
+</nav>
+</div>
+      <hr>
+  <table border = 1>
+  <div>
+    <tr></tr>
+    <tr border-style:hidden>
+        <td>ID</td>
+        <td>Entry</td>
+        <td>Entry</td>
+        <td>Property</td>
+        <td>PIN</td>
+    </tr>
+    <tr border-style:hidden>
+        <td>#</td>
+        <td>Date</td>
+        <td>By</td>
+        <td>Details</td>
+        <td>#</td>
+    </tr>
+  </div>
+  <div border=1>
+  {% for prop in props %}
+    <tr>
+      <article class="prop">
+        <td> {{ prop['id'] }} </td>
+        <td> {{ prop['created'].strftime('%Y-%m-%d') }} </td>
+        <td> {{ prop['username'] }} </td>
+        <td> <p class="body">{{ prop['body'] }}</p> </td>
+        <td> {{ prop['ppin'] }} </td>
+        {% if g.user['id'] == prop['author_id'] %}
+        <td> <a class="action" href="{{ url_for('props.update', id=prop['id']) }}">Edit</a> </td>
+        {% endif %}
+      </article>
+    </tr>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+  </div>
+  </table>
+{% endif %}
+{% endblock %}

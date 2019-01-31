@@ -1,0 +1,10 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Mflsrv</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <h1><center><a href="{{ url_for('index') }}">MFLock Property Access Application</a></h1>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% block content %}{% endblock %}
+</section>

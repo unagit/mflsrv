@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rm -rf instance
+cd mflsrv
+rm -rf __pycache__
